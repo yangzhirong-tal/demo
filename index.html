@@ -144,13 +144,12 @@
                     },
                 })
 
-                // const value = `<h2>New content here</h2><ol><li>xxx</li></ol>`
-                const value = '<p><span style="line-height:4">格式测试</span></p><h1>H1标题</h1><p><a target="_blank" href="https://www.baidu.com" target="">超链接</a> <a target="_blank" href="https://www.baidu.com" target="_blank">https://www.baidu.com</a></p><p><span data-foo="at" data-id="222252" class="_1fay5zOlnlA7qpU1Cids6F" style="color:#286CFB">@yach_ce4 (@899) </span> </p><blockquote>引用——————<br/>111</blockquote><h2></h2><h2>H2标题</h2><p><strong>中文加粗</strong></p><p><em><u>中文斜体下划线</u></em></p><p><span style="color:#c0392b">中文红色</span></p><p style="text-align:center;"><span style="color:#000000">中文居中</span></p><p style="text-align:center;"></p><h3>H3标题</h3><ol><li>有序列表1</li><ol><li>有序列表1.1</li></ol><li>有序列表2</li><ol><li>有序列表2.1</li><li>有序列表2.2</li><ol><li>有序列表2.2.1</li><ol><li>有序列表2.2.1.1</li></ol><li>有序列表2.2.2</li></ol></ol></ol><ul><li>无序列表1</li><li>无序列表2</li><ul><li>缩紧无需列表3</li></ul></ul><pre><code>//代码<br/>console.log(&#x27;123&#x27;)</code></pre><div class="media-wrap image-wrap"><img class="media-wrap image-wrap" src="https://yach-static.zhiyinlou.com/test/jsapi/1731314542315/oj250roabor/2db79cb3-490a-4cda-a629-f3e33973efcc.jpg"/></div>'
-                // const delta = editor.clipboard.convert(value)
 
-                // console.log(editor)
-                // editor.setContents(delta, 'silent')
+                const value = '<p><span style="line-height:4">格式测试</span></p><h1>H1标题</h1><p><a target="_blank" href="https://www.baidu.com" target="">超链接</a> <a target="_blank" href="https://www.baidu.com" target="_blank">https://www.baidu.com</a></p><p><span data-foo="at" data-id="222252" class="_1fay5zOlnlA7qpU1Cids6F" style="color:#286CFB">@yach_ce4 (@899) </span> </p><blockquote>引用——————<br/>111</blockquote><h2></h2><h2>H2标题</h2><p><strong>中文加粗</strong></p><p><em><u>中文斜体下划线</u></em></p><p><span style="color:#c0392b">中文红色</span></p><p style="text-align:center;"><span style="color:#000000">中文居中</span></p><p style="text-align:center;"></p><h3>H3标题</h3><ol><li>有序列表1</li><ol><li>有序列表1.1</li></ol><li>有序列表2</li><ol><li>有序列表2.1</li><li>有序列表2.2</li><ol><li>有序列表2.2.1</li><ol><li>有序列表2.2.1.1</li></ol><li>有序列表2.2.2</li></ol></ol></ol><ul><li>无序列表1</li><li>无序列表2</li><ul><li>缩紧无需列表3</li></ul></ul><pre><code>//代码<br/>console.log(&#x27;123&#x27;)</code></pre><div class="media-wrap image-wrap"><img class="media-wrap image-wrap" src="https://yach-static.zhiyinlou.com/test/jsapi/1731314542315/oj250roabor/2db79cb3-490a-4cda-a629-f3e33973efcc.jpg"/></div>'
+
                 editor.clipboard.dangerouslyPasteHTML(value,'user')
+                editor.clipboard.dangerouslyPasteHTML(value,'user')
+                
 
                 editor.on('text-change', () => {
                     console.log('delta=>',editor.editor.delta)
