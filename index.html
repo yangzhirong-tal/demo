@@ -10,13 +10,6 @@
     <h1>基于Quill示例</h1>
     <div id="editor">
         <p>Hello Fluent Editor!!!</p>
-        <!-- <p>🌟
-            行内格式：背景颜色、加粗字体、字体颜色、字体、内联代码、斜体、链接、字体大小、删除线、上标 / 下标、下划线
-            块级格式：引用、标题、缩进、列表、文本对齐方式、文本方向、代码块
-        </p>  
-        <p>🌟
-            演示支持功能：代码块高亮，@提醒，格式刷，表格高级操作，图片操作（拖拽上传，等比缩放），上传视频，插入表情✅，插入公式，支持markdown语法
-        </p> -->
     </div>
 
     <br>
@@ -28,16 +21,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
     <script type="module">
-        // import FluentEditor from "./src/index.ts";
-        // import hljs from 'highlight.js';
-        // import the highlight.js theme you want
         import 'highlight.js/styles/atom-one-dark.css'
 
-        // document.querySelectorAll("pre code").forEach((el) => {
-        //     hljs.highlightElement(el);
-        // });
+        document.querySelectorAll("pre code").forEach((el) => {
+            hljs.highlightElement(el);
+        });
   
-        // hljs.initLineNumbersOnLoad();
+        hljs.initLineNumbersOnLoad();
 
         const TOOLBAR_CONFIG = [
         ["undo", "redo", "clean", "format-painter"],
