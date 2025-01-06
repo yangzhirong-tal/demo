@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./src/assets/style.scss" />
+  </head>
+  <body>
+    <h1>基于Quill示例</h1>
+    <div id="editor">
+        <p>Hello Fluent Editor!!!</p>
+        <!-- <p>🌟
+            行内格式：背景颜色、加粗字体、字体颜色、字体、内联代码、斜体、链接、字体大小、删除线、上标 / 下标、下划线
+            块级格式：引用、标题、缩进、列表、文本对齐方式、文本方向、代码块
+        </p>  
+        <p>🌟
+            演示支持功能：代码块高亮，@提醒，格式刷，表格高级操作，图片操作（拖拽上传，等比缩放），上传视频，插入表情✅，插入公式，支持markdown语法
+        </p> -->
+    </div>
+
+    <br>
+    预览效果：
+    <div id="previewHtml"></div>
+    HTML:
+    <div id="previewText"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script type="module">
+        // import FluentEditor from "./src/index.ts";
+        // import hljs from 'highlight.js';
+        // import the highlight.js theme you want
+        import 'highlight.js/styles/atom-one-dark.css'
+
+        // document.querySelectorAll("pre code").forEach((el) => {
+        //     hljs.highlightElement(el);
+        // });
+  
+        // hljs.initLineNumbersOnLoad();
+
+        const TOOLBAR_CONFIG = [
+        ["undo", "redo", "clean", "format-painter"],
+        [
+            { header: [1, 2, 3, 4, 5, 6, false] },
+            {
+            font: [
+                "songti",
+                "yahei",
+                "kaiti",
+                "heiti",
+                "lishu",
+                "mono",
+                "arial",
+                "arialblack",
+                "comic",
+                "impact",
+                "times",
+            ],
+            },
+            {
+            size: [
+                "12px",
+                "14px",
+                "16px",
+                "18px",
+                "20px",
+                "24px",
+                "32px",
+                "36px",
+                "48px",
+                "72px",
+            ],
+            },
+        ],
+        ["bold", "italic", "strike", "underline"],
+        [{ color: [] }, { background: [] }],
+        [
+            { align: [] },
+            { list: "ordered" },
+            { list: "bullet" },
+            { list: "check" },
+        ],
+        [{ script: "sub" }, { script: "super" }],
+        [{ indent: "-1" }, { indent: "+1" }],
+        [{ direction: "rtl" }],
+        ["link", "blockquote", "code", "code-block"],
+        ["image", "file", "better-table"],
+        ["emoji", "video", "formula", "screenshot", "fullscreen"],
+        ];
+
+        // @提醒
+        const searchKey = "cn";
+        const mentionList = [
+            {
+                name: "Jack",
+                age: 26,
+                cn: "Jack 杰克",
+            },
+            {
+                name: "Lucy",
+                age: 22,
+                cn: "Lucy 露西",
+            },
+            {
+                name: "John",
+                age: 21,
+                cn: "John 约翰",
+            },
+        ];
+
+        let editor;
+
+        import('./src/index.ts').then((module) => {
+            const FluentEditor = module.default
+
+            import('quill-markdown-shortcuts').then((markdown) => {
+                const MarkdownShortcuts = markdown.default
+
+                FluentEditor.register('modules/markdownShortcuts', MarkdownShortcuts)
+
+                editor = new FluentEditor('#editor', {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: TOOLBAR_CONFIG,// 工具栏
+                        syntax: { //代码高亮
+                            hljs,
+                        },
+                        file: true,// 文件上传
+                        "emoji-toolbar": true,// 表情工具
+                        markdownShortcuts: true,// 支持markdown
+                        counter: true,// 字数统计
+                        mention: { // @提醒
+                            itemKey: 'cn',
+                            searchKey,
+                            search(term) {
+                                return mentionList.filter((item) => {
+                                    return item[searchKey] && String(item[searchKey]).includes(term)
+                                })
+                            },
+                        },
+                        // syntax: true,
+
+                    },
+                })
+
+                // const value = `<h2>New content here</h2><ol><li>xxx</li></ol>`
+                const value = '<p><span style="line-height:4">格式测试</span></p><h1>H1标题</h1><p><a target="_blank" href="https://www.baidu.com" target="">超链接</a> <a target="_blank" href="https://www.baidu.com" target="_blank">https://www.baidu.com</a></p><p><span data-foo="at" data-id="222252" class="_1fay5zOlnlA7qpU1Cids6F" style="color:#286CFB">@yach_ce4 (@899) </span> </p><blockquote>引用——————<br/>111</blockquote><h2></h2><h2>H2标题</h2><p><strong>中文加粗</strong></p><p><em><u>中文斜体下划线</u></em></p><p><span style="color:#c0392b">中文红色</span></p><p style="text-align:center;"><span style="color:#000000">中文居中</span></p><p style="text-align:center;"></p><h3>H3标题</h3><ol><li>有序列表1</li><ol><li>有序列表1.1</li></ol><li>有序列表2</li><ol><li>有序列表2.1</li><li>有序列表2.2</li><ol><li>有序列表2.2.1</li><ol><li>有序列表2.2.1.1</li></ol><li>有序列表2.2.2</li></ol></ol></ol><ul><li>无序列表1</li><li>无序列表2</li><ul><li>缩紧无需列表3</li></ul></ul><pre><code>//代码<br/>console.log(&#x27;123&#x27;)</code></pre><div class="media-wrap image-wrap"><img class="media-wrap image-wrap" src="https://yach-static.zhiyinlou.com/test/jsapi/1731314542315/oj250roabor/2db79cb3-490a-4cda-a629-f3e33973efcc.jpg"/></div>'
+                // const delta = editor.clipboard.convert(value)
+
+                // console.log(editor)
+                // editor.setContents(delta, 'silent')
+                editor.clipboard.dangerouslyPasteHTML(value,'user')
+
+                editor.on('text-change', () => {
+                    console.log('delta=>',editor.editor.delta)
+                    document.getElementById('previewHtml').innerHTML = editor.root.innerHTML;
+                    document.getElementById('previewText').innerText = editor.root.innerHTML;
+                })
+
+            })
+            
+        })
+
+
+
+        // const editor = new FluentEditor("#editor", {
+        //     theme: "snow",
+        //     modules: {
+        //         toolbar: TOOLBAR_CONFIG,
+        //         file: true,
+        //         "emoji-toolbar": true,
+        //         syntax: true,
+        //         counter: true,
+        //         mention: {
+        //             itemKey: 'cn',
+        //             searchKey,
+        //             search(term) {
+        //                 return mentionList.filter((item) => {
+        //                     return item[searchKey] && String(item[searchKey]).includes(term)
+        //                 })
+        //             },
+        //         },
+        //     },
+        // });
+    </script>
+  </body>
+</html>
